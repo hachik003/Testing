@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Homepage</title>
+  <style>
+    :root {
+      --bg: #f7f7f7;
+      --card: #ffffff;
+      --accent: #f2c7c7;
+      --accent-dark: #c97f7f;
+      --text: #222222;
+      --muted: #777777;
+      --border: #dddddd;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --shadow: 0 8px 16px rgba(0,0,0,0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+
+    /* HERO */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 0 24px;
+    }
+
+    .hero-logo {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: #d9d9d9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      border-bottom: 2px solid #333;
+      padding: 0 8px 2px;
+    }
+
+    .hero-desc {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .calendar-section {
+      margin-top: 32px;
+      background: #f0f0f0;
+      border-radius: var(--radius-md);
+      padding: 12px 12px 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .calendar-header {
+      display: inline-block;
+      padding: 10px 40px;
+      background: #d9d9d9;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    .calendar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .calendar-scroller {
+      display: flex;
+      overflow-x: auto;
+      gap: 16px;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+    }
+
+    .calendar-card {
+      min-width: 140px;
+      background: var(--card);
+      border-radius: var(--radius-md);
+      padding: 10px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+    }
+
+    .calendar-date-pill {
+      background: var(--accent);
+      border-radius: 16px;
+      padding: 8px 10px;
+      font-size: 12px;
+      text-align: center;
+      width: 48px;
+    }
+
+    .calendar-club-name {
+      font-size: 13px;
+      margin-left: 8px;
+    }
+
+    .calendar-description {
+      margin-top: 8px;
+      background: #f9f1f1;
+      border-radius: 12px;
+      padding: 10px;
+      font-size: 12px;
+    }
+
+    .calendar-heart {
+      position: absolute;
+      right: 12px;
+      bottom: 10px;
+      font-size: 16px;
+      color: var(--accent-dark);
+    }
+
+    .calendar-arrow {
+      flex: 0 0 auto;
+      margin-left: 8px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: none;
+      background: #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .tabs-filter-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr) auto;
+      gap: 12px;
+      margin: 32px 0 16px;
+      align-items: center;
+    }
+
+    .tab {
+      background: #d9d9d9;
+      border-radius: 30px;
+      text-align: center;
+      padding: 10px 0;
+      font-size: 26px;
+      font-weight: 500;
+    }
+
+    .filter-btn {
+      border-radius: 999px;
+      border: 2px solid #444;
+      padding: 10px 28px;
+      background: #f2f2f2;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .club-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .club-card {
+      background: #e9e9e9;
+      border-radius: var(--radius-lg);
+      padding: 20px 24px 18px;
+      text-align: center;
+    }
+
+    .club-image {
+      background: #d3d3d3;
+      border-radius: var(--radius-lg);
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .club-name-btn {
+      display: inline-block;
+      border-radius: 999px;
+      border: 2px solid #000;
+      padding: 6px 24px;
+      margin-bottom: 10px;
+      background: #fff;
+      font-size: 14px;
+      text-decoration: none;
+      color: #000;
+      cursor: pointer;
+      transition: 0.15s ease;
+    }
+
+    .club-name-btn:hover {
+      background: #000;
+      color: #fff;
+    }
+
+    .details-bar {
+      margin: 0 auto;
+      margin-top: 4px;
+      width: 70%;
+      height: 16px;
+      border-radius: 4px;
+      background: #d0d0d0;
+      font-size: 10px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 900px) {
+      .club-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 600px) {
+      .club-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tabs-filter-row {
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: auto;
+      }
+
+      .tab {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <div class="hero-logo">App logo</div>
+      <div class="hero-title">App Name</div>
+      <div class="hero-desc">Description</div>
+    </section>
+
+    <section class="calendar-section">
+      <div class="calendar-header">Calendar</div>
+      <div class="calendar-row">
+        <div class="calendar-scroller">
+          <article class="calendar-card">
+            <div style="display:flex;align-items:center;">
+              <div class="calendar-date-pill">
+                <div>07</div><div>Dec</div>
+              </div>
+              <div class="calendar-club-name">Club Name</div>
+            </div>
+            <div class="calendar-description">Description</div>
+            <div class="calendar-heart">♥</div>
+          </article>
+
+        </div>
+        <button class="calendar-arrow">➜</button>
+      </div>
+    </section>
+
+    <section class="tabs-filter-row">
+      <div class="tab">All</div>
+      <div class="tab">Sport</div>
+      <div class="tab">Culture</div>
+      <button class="filter-btn">Filter</button>
+    </section>
+
+    <section class="club-grid">
+      <article class="club-card">
+        <div class="club-image">Image</div>
+        <a
+          href="{{ url_for('club_page', club_name='Basketball Club') }}"
+          class="club-name-btn"
+        >
+          Basketball Club
+        </a>
+        <div class="details-bar">Details Button</div>
+      </article>
+
+      <article class="club-card">
+        <div class="club-image">Image</div>
+        <a
+          href="{{ url_for('club_page', club_name='Tennis Club') }}"
+          class="club-name-btn"
+        >
+          Tennis Club
+        </a>
+        <div class="details-bar">Details Button</div>
+      </article>
+
+      <article class="club-card">
+        <div class="club-image">Image</div>
+        <a
+          href="{{ url_for('club_page', club_name='Art Club') }}"
+          class="club-name-btn"
+        >
+          Art Club
+        </a>
+        <div class="details-bar">Details Button</div>
+      </article>
+
+    </section>
+  </div>
+</body>
+</html>

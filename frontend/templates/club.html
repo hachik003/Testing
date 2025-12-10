@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ club.clubName }} | Club</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #f7f7f7;
+      color: #111;
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: 2fr 1.3fr 1.3fr 1.3fr 1.3fr 0.7fr;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .nav-item {
+      padding: 16px 20px;
+      border-right: 1px solid #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #111;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+    }
+
+    .nav-pill {
+      background: #f2b9ba;
+      border-radius: 999px;
+      padding: 8px 20px;
+    }
+
+    .nav-search {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 40px auto 60px;
+      padding: 0 24px;
+    }
+
+    .club-title {
+      text-align: center;
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    .title-lines {
+      width: 70%;
+      margin: 0 auto 40px;
+      border-top: 3px solid #000;
+      position: relative;
+    }
+
+    .title-lines::before,
+    .title-lines::after {
+      content: "";
+      display: block;
+      width: 100%;
+      border-top: 3px solid #000;
+      margin-top: 8px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 0 8%;
+      font-size: 24px;
+      margin-bottom: 40px;
+    }
+
+    .info-label {
+      font-weight: 500;
+    }
+
+    .info-line {
+      display: inline-block;
+      min-width: 220px;
+      border-bottom: 3px solid #000;
+      margin-left: 8px;
+    }
+
+    .message-row {
+      margin: 0 8% 50px;
+      font-size: 24px;
+    }
+
+    .cards-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 30px;
+      margin: 0 4%;
+    }
+
+    .club-card {
+      background: #e2e2e2;
+      height: 220px;
+      position: relative;
+    }
+
+    .card-footer-line {
+      height: 4px;
+      background: #000;
+      width: 80%;
+      margin: 14px auto 0;
+    }
+
+    .icon-heart,
+    .icon-comment {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #fff;
+      position: absolute;
+      bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .icon-heart {
+      right: 40px;
+      color: red;
+    }
+
+    .icon-comment {
+      right: 10px;
+      color: #444;
+    }
+
+    @media (max-width: 900px) {
+      .cards-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .cards-row {
+        grid-template-columns: 1fr;
+      }
+      .info-row {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-item">
+      <a href="{{ url_for('homepage') }}" class="nav-link">App Name</a>
+    </div>
+    <div class="nav-item">
+      <a href="{{ url_for('homepage') }}" class="nav-link">Home</a>
+    </div>
+    <div class="nav-item">
+      <div class="nav-pill">
+        Clubs&Circle
+      </div>
+    </div>
+    <div class="nav-item">
+      <span>Event</span>
+    </div>
+    <div class="nav-item">
+      <a href="{{ url_for('login') }}" class="nav-link">login</a>
+    </div>
+    <div class="nav-item nav-search">
+      🔍
+    </div>
+  </nav>
+
+  <main class="page">
+    <h1 class="club-title">{{ club.clubName }}</h1>
+    <div class="title-lines"></div>
+
+    <div class="info-row">
+      <div>
+        <span class="info-label">Meets:</span>
+        <span class="info-line">{{ club.meetingTime }}</span>
+      </div>
+      <div>
+        <span class="info-label">Location:</span>
+        <span class="info-line">{{ club.meetingLocation }}</span>
+      </div>
+    </div>
+
+    <div class="message-row">
+      <span class="info-label">Message:</span>
+      <span class="info-line" style="min-width: 400px;"></span>
+      <div style="margin-top: 10px; font-size: 18px;">
+        {{ club.description }}
+      </div>
+    </div>
+
+    <section class="cards-row">
+      <div>
+        <div class="club-card">
+          <div class="icon-heart">♥</div>
+          <div class="icon-comment">💬</div>
+        </div>
+        <div class="card-footer-line"></div>
+      </div>
+
+      <div>
+        <div class="club-card">
+          <div class="icon-heart">♥</div>
+          <div class="icon-comment">💬</div>
+        </div>
+        <div class="card-footer-line"></div>
+      </div>
+
+      <div>
+        <div class="club-card">
+          <div class="icon-heart">♥</div>
+          <div class="icon-comment">💬</div>
+        </div>
+        <div class="card-footer-line"></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
