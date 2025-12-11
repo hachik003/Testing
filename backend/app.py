@@ -69,6 +69,8 @@ default_clubs = [
 ]
 
 with app.app_context():
+    db.create_all()
+
     for club in default_clubs:
         existing = clubs.query.filter_by(clubName=club["clubName"]).first()
         if not existing:
@@ -127,9 +129,6 @@ def homepage():
 def club_page(club_name):
     club = clubs.query.filter_by(clubName=club_name).first_or_404()
     return render_template("club.html", club=club)
-
-with app.app_context():
-    db.create_all()
 
 if __name__ == "__main__":
     app.run(debug=True)
