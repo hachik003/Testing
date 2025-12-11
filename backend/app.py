@@ -9,6 +9,7 @@ import os
 load_dotenv()
 
 HOST = os.getenv("DB_HOST")
+PORT = os.getenv("DB_PORT")
 USER = os.getenv("DB_USER")
 PASSWORD = os.getenv("DB_PASSWORD")
 DB_NAME = os.getenv("DB_NAME")
@@ -42,6 +43,43 @@ class clubs(db.Model):
     category = db.Column(db.String(50), nullable=False)
     meetingTime = db.Column(db.String(50), nullable=False)
     meetingLocation = db.Column(db.String(100), nullable=False)
+
+default_clubs = [
+    {
+        "clubName": "Basketball Club",
+        "description": "A fun and competitive basketball group for all skill levels.",
+        "category": "Sport",
+        "meetingTime": "Every Tue & Thu, 5 PM",
+        "meetingLocation": "Gym A",
+    },
+    {
+        "clubName": "Tennis Club",
+        "description": "Weekly tennis practice and friendly matches.",
+        "category": "Sport",
+        "meetingTime": "Every Wed, 4 PM",
+        "meetingLocation": "Tennis Courts",
+    },
+    {
+        "clubName": "Art Club",
+        "description": "Painting, drawing, and creative expression.",
+        "category": "Culture",
+        "meetingTime": "Every Fri, 3 PM",
+        "meetingLocation": "Art Room 2",
+    },
+]
+
+with app.app_context():
+    for club in default_clubs:
+        existing = Clubs.query.filter_by(clubName=club["clubName"]).first()
+        if not existing:
+            new_club = Clubs(**club)
+            db.session.add(new_club)
+            print(f"Inserted: {club['clubName']}")
+        else:
+            print(f"Skipped (already exists): {club['clubName']}")
+
+    db.session.commit()
+    print("Seeding complete!")
 
 @app.route("/")
 def hello_world():
@@ -89,6 +127,9 @@ def homepage():
 def club_page(club_name):
     club = clubs.query.filter_by(clubName=club_name).first_or_404()
     return render_template("club.html", club=club)
+
+with app.app_context():
+    db.create_all()
 
 if __name__ == "__main__":
     app.run(debug=True)
