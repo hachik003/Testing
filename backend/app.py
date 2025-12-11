@@ -14,7 +14,7 @@ USER = os.getenv("DB_USER")
 PASSWORD = os.getenv("DB_PASSWORD")
 DB_NAME = os.getenv("DB_NAME")
 
-DATABASE_URL = f"mysql+pymysql://{USER}:{PASSWORD}@{HOST}/{DB_NAME}"
+DATABASE_URL = f"mysql+pymysql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB_NAME}"
 
 app = Flask(__name__, template_folder="../frontend/templates")
 app.secret_key = os.getenv("SECRET_KEY", "hello")
@@ -70,9 +70,9 @@ default_clubs = [
 
 with app.app_context():
     for club in default_clubs:
-        existing = Clubs.query.filter_by(clubName=club["clubName"]).first()
+        existing = clubs.query.filter_by(clubName=club["clubName"]).first()
         if not existing:
-            new_club = Clubs(**club)
+            new_club = clubs(**club)
             db.session.add(new_club)
             print(f"Inserted: {club['clubName']}")
         else:
