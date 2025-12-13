@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 type Event = {
@@ -9,6 +9,8 @@ type Event = {
   month: string;
   clubName: string;
   description: string;
+  time: string;
+  location: string;
 };
 
 type Club = {
@@ -16,22 +18,71 @@ type Club = {
   name: string;
   category: 'All' | 'Sport' | 'Culture';
   description: string;
+  meetingTime?: string;
+  meetingLocation?: string;
 };
 
 const categories = ['All', 'Sport', 'Culture'] as const;
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+
 export default function HomePage() {
-  // ● Empty arrays for now (replace with API calls later)
   const [events, setEvents] = useState<Event[]>([]);
   const [clubs, setClubs] = useState<Club[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const [activeCategory, setActiveCategory] =
     useState<(typeof categories)[number]>('All');
 
+  // Fetch clubs from API
+  useEffect(() => {
+    const fetchClubs = async () => {
+      try {
+        const response = await fetch(`${API_URL}/clubs`);
+        if (!response.ok) throw new Error('Failed to fetch clubs');
+        const data = await response.json();
+        setClubs(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to fetch clubs');
+        console.error('Error fetching clubs:', err);
+      }
+    };
+
+    fetchClubs();
+  }, []);
+
+  // Fetch events from API
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch(`${API_URL}/events`);
+        if (!response.ok) throw new Error('Failed to fetch events');
+        const data = await response.json();
+        setEvents(data);
+      } catch (err) {
+        console.error('Error fetching events:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  // Filter clubs by category
   const filteredClubs =
     activeCategory === 'All'
       ? clubs
       : clubs.filter((club) => club.category === activeCategory);
+
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-neutral-100 flex items-center justify-center">
+        <div className="text-neutral-600">Loading...</div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-neutral-100 flex justify-center">
@@ -49,6 +100,13 @@ export default function HomePage() {
             </p>
           </div>
         </section>
+
+        {/* Error message */}
+        {error && (
+          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            {error}
+          </div>
+        )}
 
         {/* Calendar */}
         <section className="bg-white rounded-3xl shadow-sm px-4 py-5 md:px-6 md:py-6">
@@ -111,42 +169,42 @@ export default function HomePage() {
 
             <div className="flex-1 bg-neutral-200 rounded-full flex items-center justify-between px-4 py-3 md:px-10">
               <div className="w-full flex text-lg font-semibold">
-  {/* ALL = left aligned */}
-  <button
-    onClick={() => setActiveCategory('All')}
-    className={`w-1/3 text-left pl-4 md:pl-10 transition ${
-      activeCategory === 'All'
-        ? 'text-neutral-900'
-        : 'text-neutral-500'
-    }`}
-  >
-    All
-  </button>
+                {/* ALL = left aligned */}
+                <button
+                  onClick={() => setActiveCategory('All')}
+                  className={`w-1/3 text-left pl-4 md:pl-10 transition ${
+                    activeCategory === 'All'
+                      ? 'text-neutral-900'
+                      : 'text-neutral-500'
+                  }`}
+                >
+                  All
+                </button>
 
-  {/* SPORT = centered */}
-  <button
-    onClick={() => setActiveCategory('Sport')}
-    className={`w-1/3 text-center transition ${
-      activeCategory === 'Sport'
-        ? 'text-neutral-900'
-        : 'text-neutral-500'
-    }`}
-  >
-    Sport
-  </button>
+                {/* SPORT = centered */}
+                <button
+                  onClick={() => setActiveCategory('Sport')}
+                  className={`w-1/3 text-center transition ${
+                    activeCategory === 'Sport'
+                      ? 'text-neutral-900'
+                      : 'text-neutral-500'
+                  }`}
+                >
+                  Sport
+                </button>
 
-  {/* CULTURE = right aligned */}
-  <button
-    onClick={() => setActiveCategory('Culture')}
-    className={`w-1/3 text-right pr-4 md:pr-10 transition ${
-      activeCategory === 'Culture'
-        ? 'text-neutral-900'
-        : 'text-neutral-500'
-    }`}
-  >
-    Culture
-  </button>
-</div>
+                {/* CULTURE = right aligned */}
+                <button
+                  onClick={() => setActiveCategory('Culture')}
+                  className={`w-1/3 text-right pr-4 md:pr-10 transition ${
+                    activeCategory === 'Culture'
+                      ? 'text-neutral-900'
+                      : 'text-neutral-500'
+                  }`}
+                >
+                  Culture
+                </button>
+              </div>
             </div>
 
             <button
