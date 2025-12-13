@@ -1,4 +1,4 @@
-# PBL4Testing
+# PBL4 - GROUP F
 
 1. Setting up virtual environment
    
