@@ -1,32 +1,114 @@
-# PBL4 - GROUP F
+# 🎓 Club Management System - PBL4 Group F
 
-1. Setting up virtual environment
-   
-After cloning the repo, create a virtual environment (python -m venv .venv -> source .venv/bin/activate) at the root directory of your project files.
-Then, run the command "pip install -r requirements.txt".
+A full-stack web application for managing university clubs, events, and student engagement.
 
+---
 
-2. Configure files manually
-   
-Manually create a file name .env at the root directory of your project files and paste the following and receive the empty contents personally: 
+## 🚀 Quick Start for New Users
 
-DB_HOST=
-DB_PORT=
-DB_USER=
-DB_PASSWORD=
-DB_NAME=
-SECRET_KEY=
+**⚠️ FIRST TIME SETUP REQUIRED!**
 
-Within frontend-nextjs, create a file name .env.local and input the following: 
+This project needs environment configuration before it will run. Choose your guide:
 
-NEXT_PUBLIC_API_URL=http://127.0.0.1:5000/api
+### 📚 Setup Guides (Pick One)
 
+1. **[SETUP_FOR_TEAM.md](SETUP_FOR_TEAM.md)** - Quick 5-minute setup guide
+2. **[SETUP_INSTRUCTIONS.md](SETUP_INSTRUCTIONS.md)** - Detailed step-by-step instructions  
+3. **[SETUP_CHECKLIST.md](SETUP_CHECKLIST.md)** - Printable checklist to follow
 
-3. Running the website locally
+### 🎯 Quick Summary
 
-Within the virtual environment, set the current directory to backend and run the following line: 
+```bash
+# 1. Create .env file in project root with database credentials
+# 2. Create .env.local in frontend-nextjs folder
+# 3. Install backend dependencies
+cd backend
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 
-flask --app app run
+# 4. Start backend
+flask --app app run --port 5001
+
+# 5. Install frontend dependencies (new terminal)
+cd frontend-nextjs
+npm install
+
+# 6. Start frontend
+npm run dev
+
+# 7. Open browser to http://localhost:3000
+```
+
+**⚠️ Ask project owner for database password!**
+
+---
+
+## 🏗️ Project Structure
+
+```
+GroupF/
+├── backend/              # Flask REST API
+├── frontend-nextjs/      # Next.js React frontend
+├── .env                  # Database config (CREATE THIS)
+└── README.md            # This file
+```
+
+---
+
+## 🔧 Tech Stack
+
+**Backend:**
+- Flask 3.1.2
+- SQLAlchemy
+- MySQL (Railway hosted)
+- Flask-CORS
+
+**Frontend:**
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS
+
+---
+
+## 📖 Documentation
+
+- [SETUP_FOR_TEAM.md](SETUP_FOR_TEAM.md) - Quick setup guide
+- [SETUP_INSTRUCTIONS.md](SETUP_INSTRUCTIONS.md) - Detailed instructions
+- [SETUP_CHECKLIST.md](SETUP_CHECKLIST.md) - Setup checklist
+- [QUICK_START.md](QUICK_START.md) - Original quick start
+- [API_DOCUMENTATION.md](backend/API_DOCUMENTATION.md) - API endpoints
+- [DATABASE_SCHEMA.md](backend/DATABASE_SCHEMA.md) - Database structure
+- [FEATURES_COMPLETE.md](FEATURES_COMPLETE.md) - Feature list
+
+---
+
+## 🐛 Common Issues
+
+**Port 5001 already in use (macOS):**
+- System Settings → General → AirDrop & Handoff → Disable "AirPlay Receiver"
+
+**Database connection failed:**
+- Verify `.env` file exists in project root
+- Check database password with project owner
+
+**Frontend shows "Load failed":**
+- Ensure backend is running on port 5001
+- Check `.env.local` has correct API URL
+- Restart frontend after creating `.env.local`
+
+---
+
+## 👥 Team
+
+PBL4 - Group F
+
+---
+
+## 📝 License
+
+Educational project for PBL4 course.
 
 In a different terminal, set the current directory to frontend-nextjs and run the following line. This file should not be ran inside a virtual environment:
 

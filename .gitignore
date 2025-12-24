@@ -1,5 +1,30 @@
+# Environment files (contain sensitive credentials)
 .env
+.env.local
 
+# But include example files
+!.env.example
+!.env.local.example
+
+# Virtual environments
 env/
+venv/
+backend/venv/
 
+# Node modules
+node_modules/
+
+# Next.js build
+.next/
+out/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# macOS
 .DS_Store
+
+# IDEs
+.vscode/
+.idea/
